@@ -70,6 +70,7 @@ public class RobotProperties {
         this.motor6 = motor6;
     }
 
+
     public void pushData(RobotProperties properties) {
         SmartDashboard.putNumber("Joystick X", properties.joystick.getJoystickX());
         SmartDashboard.putNumber("Joystick Y", properties.joystick.getJoystickY());
