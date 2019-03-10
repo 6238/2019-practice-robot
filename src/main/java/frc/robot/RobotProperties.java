@@ -2,36 +2,52 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class RobotProperties {
     JoystickController joystick;
 
-    private WPI_TalonSRX leftMotor;
-    private WPI_TalonSRX rightMotor;
+    public WPI_TalonSRX leftMotor1;
+    public WPI_TalonSRX leftMotor2;
+    public WPI_TalonSRX rightMotor1;
+    public WPI_TalonSRX rightMotor2;
+
+    private SpeedControllerGroup leftDrive;
+    private SpeedControllerGroup rightDrive;
 
     private DifferentialDrive robotDrive;
 
     private WPI_TalonSRX elevator1;
     private WPI_TalonSRX elevator2;
 
-    private WPI_TalonSRX motor5;
-    private WPI_TalonSRX motor6;
+    private WPI_TalonSRX motor7;
+    private WPI_TalonSRX motor8;
 
     public RobotProperties() {
         joystick = new JoystickController(0);
 
-        leftMotor = new WPI_TalonSRX(1);
-        rightMotor = new WPI_TalonSRX(2);
+        leftMotor1 = new WPI_TalonSRX(7);
+        leftMotor2 = new WPI_TalonSRX(8);
+        rightMotor1 = new WPI_TalonSRX(3);
+        rightMotor2 = new WPI_TalonSRX(4);
 
-        robotDrive = new DifferentialDrive(leftMotor, rightMotor);
+        leftMotor1.setInverted(false);
+        leftMotor2.setInverted(false);
+        rightMotor1.setInverted(false);
+        rightMotor2.setInverted(false);
 
-        elevator1 = new WPI_TalonSRX(3);
-        elevator2 = new WPI_TalonSRX(4);
+        leftDrive = new SpeedControllerGroup(leftMotor1, leftMotor2);
+        rightDrive = new SpeedControllerGroup(rightMotor1, rightMotor2);
 
-        motor5 = new WPI_TalonSRX(5);
-        motor6 = new WPI_TalonSRX(6);
+        robotDrive = new DifferentialDrive(leftDrive, rightDrive);
+
+        elevator1 = new WPI_TalonSRX(1);
+        elevator2 = new WPI_TalonSRX(2);
+
+        motor7 = new WPI_TalonSRX(5);
+        motor8 = new WPI_TalonSRX(6);
     }
 
     public DifferentialDrive getRobotDrive() {
@@ -54,20 +70,20 @@ public class RobotProperties {
         this.elevator2 = elevator2;
     }
 
-    public WPI_TalonSRX getMotor5() {
-        return motor5;
+    public WPI_TalonSRX getmotor7() {
+        return motor7;
     }
 
-    public void setMotor5(WPI_TalonSRX motor8) {
-        this.motor5 = motor5;
+    public void setmotor7(WPI_TalonSRX motor8) {
+        this.motor7 = motor7;
     }
 
-    public WPI_TalonSRX getMotor6() {
-        return motor6;
+    public WPI_TalonSRX getmotor8() {
+        return motor8;
     }
 
-    public void setMotor6(WPI_TalonSRX motor6) {
-        this.motor6 = motor6;
+    public void setmotor8(WPI_TalonSRX motor8) {
+        this.motor8 = motor8;
     }
 
 
