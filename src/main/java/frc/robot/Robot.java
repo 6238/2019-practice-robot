@@ -30,10 +30,11 @@ public class Robot extends TimedRobot {
   private final List<RobotController> controllers;
 
   public Robot() {
+    properties = new RobotProperties();
     controllers = new ArrayList<RobotController>();
     controllers.add(new DriveTrainController());
     // controllers.add(new ElevatorController());
-    // controllers.add(new VisionController(properties));
+    controllers.add(new VisionController(properties));
   }
 
   /**
