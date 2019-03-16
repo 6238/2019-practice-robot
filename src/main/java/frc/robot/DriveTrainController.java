@@ -1,5 +1,7 @@
 package frc.robot;
 
+import java.util.Properties;
+
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -22,12 +24,19 @@ public class DriveTrainController implements RobotController {
     // brake mode
     boolean brakeMode = true;
 
+    // absolute drive
+    boolean absoluteDrive = false;
+
+    private static final double kAngleSetpoint = 0.0;
+    private double kP = -0.1;
+
     public DriveTrainController() {
         // send values to dashboard
         SmartDashboard.putNumber("insanityFactor", insanityFactor);
         SmartDashboard.putBoolean("reverseDrive", reverseDrive);
-        SmartDashboard.putBoolean("joystickDrive", joyDrive);
+        SmartDashboard.putBoolean("joyDrive", joyDrive);
         SmartDashboard.putBoolean("brakeMode", brakeMode);
+        SmartDashboard.putBoolean("absoluteDrive", absoluteDrive);
     }
 
     // name function for initial testing
@@ -49,28 +58,39 @@ public class DriveTrainController implements RobotController {
 
         brakeMode = SmartDashboard.getBoolean("brakeMode", brakeMode);
 
-        if (SmartDashboard.getBoolean("Joystick Control", true)) {
-            if (joyDrive) {
-                if (reverseDrive) {
-                    // reverseDrive switch
-                    robotDrive.arcadeDrive(insanityFactor * properties.joystick.getJoystickY(), insanityFactor * properties.joystick.getJoystickZ(), false);
-                } else {
-                    // normal driving
-                    robotDrive.arcadeDrive(-insanityFactor * properties.joystick.getJoystickY(), insanityFactor * properties.joystick.getJoystickZ(), false);
-                }
-            }
+        absoluteDrive = SmartDashboard.getBoolean("absoluteDrive", absoluteDrive);
 
-            if (brakeMode) {
-                properties.leftMotor1.setNeutralMode(NeutralMode.Brake);
-                properties.leftMotor2.setNeutralMode(NeutralMode.Brake);
-                properties.rightMotor1.setNeutralMode(NeutralMode.Brake);
-                properties.rightMotor2.setNeutralMode(NeutralMode.Brake);
+        double turningValue = (kAngleSetpoint - properties.gyro.getAngle()) * kP;
+
+        if (turningValue > 0.5) {
+            turningValue = 0.5;
+          } else if (turningValue < -0.5) {
+            turningValue = -0.5;
+          }
+
+        if (joyDrive) {
+            if (reverseDrive) {
+                // reverseDrive switch
+                robotDrive.arcadeDrive(insanityFactor * properties.joystick.getJoystickY(), insanityFactor * properties.joystick.getJoystickZ(), false);
+            } else if (absoluteDrive) {
+                // absoluteDrive switch
+                robotDrive.arcadeDrive(-insanityFactor * properties.joystick.getJoystickY(), turningValue, false);
             } else {
-                properties.leftMotor1.setNeutralMode(NeutralMode.Coast);
-                properties.leftMotor2.setNeutralMode(NeutralMode.Coast);
-                properties.rightMotor1.setNeutralMode(NeutralMode.Coast);
-                properties.rightMotor2.setNeutralMode(NeutralMode.Coast);
+                // normal driving
+                robotDrive.arcadeDrive(-insanityFactor * properties.joystick.getJoystickY(), insanityFactor * properties.joystick.getJoystickZ(), false);
             }
+        }
+
+        if (brakeMode) {
+            properties.leftMotor1.setNeutralMode(NeutralMode.Brake);
+            properties.leftMotor2.setNeutralMode(NeutralMode.Brake);
+            properties.rightMotor1.setNeutralMode(NeutralMode.Brake);
+            properties.rightMotor2.setNeutralMode(NeutralMode.Brake);
+        } else {
+            properties.leftMotor1.setNeutralMode(NeutralMode.Coast);
+            properties.leftMotor2.setNeutralMode(NeutralMode.Coast);
+            properties.rightMotor1.setNeutralMode(NeutralMode.Coast);
+            properties.rightMotor2.setNeutralMode(NeutralMode.Coast);
         }
 
         return true;

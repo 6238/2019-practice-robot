@@ -2,6 +2,7 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -24,6 +25,8 @@ public class RobotProperties {
 
     private WPI_TalonSRX motor7;
     private WPI_TalonSRX motor8;
+
+    public ADXRS450_Gyro gyro;
 
     public RobotProperties() {
         joystick = new JoystickController(0);
@@ -48,6 +51,8 @@ public class RobotProperties {
 
         motor7 = new WPI_TalonSRX(5);
         motor8 = new WPI_TalonSRX(6);
+
+        gyro = new ADXRS450_Gyro();
     }
 
     public DifferentialDrive getRobotDrive() {
@@ -117,5 +122,7 @@ public class RobotProperties {
         SmartDashboard.putNumber("Shutoff", properties.joystick.getSlider());
 
         SmartDashboard.putData(properties.getRobotDrive());
+
+        SmartDashboard.putData("Gyro", gyro);
     }
 }
