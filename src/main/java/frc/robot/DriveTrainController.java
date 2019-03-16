@@ -27,6 +27,9 @@ public class DriveTrainController implements RobotController {
     // absolute drive
     boolean absoluteDrive = false;
 
+    // self align
+    boolean selfAlign = false;
+
     private static final double kAngleSetpoint = 0.0;
     private double kP = -0.1;
 
@@ -37,6 +40,7 @@ public class DriveTrainController implements RobotController {
         SmartDashboard.putBoolean("joyDrive", joyDrive);
         SmartDashboard.putBoolean("brakeMode", brakeMode);
         SmartDashboard.putBoolean("absoluteDrive", absoluteDrive);
+        SmartDashboard.putBoolean("selfAlign", selfAlign);
     }
 
     // name function for initial testing
@@ -47,15 +51,12 @@ public class DriveTrainController implements RobotController {
 
     @Override
     public boolean performAction(RobotProperties properties) {
-        //System.out.println(!SmartDashboard.getBoolean("selfAlign", false));
-        if (!SmartDashboard.getBoolean("selfAlign", false)) 
-      {
-            DifferentialDrive robotDrive = properties.getRobotDrive();
+        DifferentialDrive robotDrive = properties.getRobotDrive();
 
-            insanityFactor = SmartDashboard.getNumber("insanityFactor", insanityFactor);
+        selfAlign = SmartDashboard.getBoolean("selfAlign", selfAlign);
 
-            reverseDrive = SmartDashboard.getBoolean("reverseDrive", reverseDrive);
-
+        insanityFactor = SmartDashboard.getNumber("insanityFactor", insanityFactor);
+        
         reverseDrive = SmartDashboard.getBoolean("reverseDrive", reverseDrive);
 
         joyDrive = SmartDashboard.getBoolean("joyDrive", joyDrive);
@@ -68,11 +69,13 @@ public class DriveTrainController implements RobotController {
 
         if (turningValue > 0.5) {
             turningValue = 0.5;
-          } else if (turningValue < -0.5) {
+        } else if (turningValue < -0.5) {
             turningValue = -0.5;
-          }
+        }
 
-        if (joyDrive) {
+        if (selfAlign) {
+            
+        } else if (joyDrive) {
             if (reverseDrive) {
                 // reverseDrive switch
                 robotDrive.arcadeDrive(insanityFactor * properties.joystick.getJoystickY(), insanityFactor * properties.joystick.getJoystickZ(), false);
