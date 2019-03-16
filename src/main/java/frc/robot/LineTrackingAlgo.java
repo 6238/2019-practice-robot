@@ -52,11 +52,7 @@ public class LineTrackingAlgo {
         Imgproc.circle(img, offsetPosition, 2, new Scalar(255, 0, 0));
         offsetPosition.x -= x / 8;
         offsetPosition.y -= y / 8;
-        System.out.println(-0.5 * properties.joystick.getJoystickY()+" "+
-        0.5 * properties.joystick.getJoystickZ());
-        
-        robotDrive.arcadeDrive(-0.5 * properties.joystick.getJoystickY(),
-        0.5 * properties.joystick.getJoystickZ());
+
         arcadeDriveAuto(offsetPosition, offsetAngle, x, y, selfAlign, lines);
         return img;
     }
@@ -104,13 +100,14 @@ public class LineTrackingAlgo {
             ArrayList<GripPipeline.Line> lines) {
         if (selfAlign) {
             if (lines.size() > 0) {
-               // System.out.println(0.5+" "+0.5);
-              //  robotDrive.arcadeDrive(0.5,0.5);
-                       // -SmartDashboard.getNumber("insanityFactor", 0) * properties.joystick.getJoystickY(),
-                       // SmartDashboard.getNumber("autoTurnSpeed", 0.5) * offset.x);
+                System.out.println(-SmartDashboard.getNumber("insanityFactor", 0.5) * properties.joystick.getJoystickY()
+                        + " " + -SmartDashboard.getNumber("autoTurnSpeed", 0.5) * angle);
+                robotDrive.arcadeDrive(
+                        -SmartDashboard.getNumber("insanityFactor", 0.5) * properties.joystick.getJoystickY(),
+                        -SmartDashboard.getNumber("autoTurnSpeed", 0.5) * angle);
 
             } else {
-              //  robotDrive.arcadeDrive(properties.joystick.getJoystickX(), properties.joystick.getJoystickZ());
+                robotDrive.arcadeDrive(properties.joystick.getJoystickX(), properties.joystick.getJoystickZ());
             }
         }
     }

@@ -90,12 +90,7 @@ public class VisionController implements RobotController {
 
                     // button on dashboard triggers the LineTrackingAlgo
                     selfAlign = SmartDashboard.getBoolean("selfAlign", false);
-                    if(selfAlign)
-                    {
-                        System.out.println("HI");
-                        robotDrive.arcadeDrive(0.1 * properties.joystick.getJoystickZ(),
-                            0.1 * properties.joystick.getJoystickY());
-                    } 
+                  
                     //System.out.println(selfAlign);
                     /*
                      * if (bwIsRunning) {
