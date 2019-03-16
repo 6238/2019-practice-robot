@@ -47,10 +47,14 @@ public class DriveTrainController implements RobotController {
 
     @Override
     public boolean performAction(RobotProperties properties) {
+        //System.out.println(!SmartDashboard.getBoolean("selfAlign", false));
+        if (!SmartDashboard.getBoolean("selfAlign", false)) 
+      {
+            DifferentialDrive robotDrive = properties.getRobotDrive();
 
-        DifferentialDrive robotDrive = properties.getRobotDrive();
+            insanityFactor = SmartDashboard.getNumber("insanityFactor", insanityFactor);
 
-        insanityFactor = SmartDashboard.getNumber("insanityFactor", insanityFactor);
+            reverseDrive = SmartDashboard.getBoolean("reverseDrive", reverseDrive);
 
         reverseDrive = SmartDashboard.getBoolean("reverseDrive", reverseDrive);
 

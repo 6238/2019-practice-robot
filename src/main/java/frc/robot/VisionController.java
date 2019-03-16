@@ -86,7 +86,7 @@ public class VisionController implements RobotController {
 
                 //button on dashboard triggers the LineTrackingAlgo
                 selfAlign = SmartDashboard.getBoolean("selfAlign", false);
-
+                //System.out.println(selfAlign);
                 /*if (bwIsRunning) {
 
                     //displays b+w video, this is the default setting

@@ -33,8 +33,8 @@ public class LineTrackingAlgo {
 
     // constructor
     public LineTrackingAlgo(RobotProperties properties) {
-        robotDrive = properties.getRobotDrive();
         this.properties = properties;
+        robotDrive = properties.getRobotDrive();
 
     }
 
@@ -52,7 +52,11 @@ public class LineTrackingAlgo {
         Imgproc.circle(img, offsetPosition, 2, new Scalar(255, 0, 0));
         offsetPosition.x -= x / 8;
         offsetPosition.y -= y / 8;
-        // System.out.println(selfAlign);
+        System.out.println(-0.5 * properties.joystick.getJoystickY()+" "+
+        0.5 * properties.joystick.getJoystickZ());
+        
+        robotDrive.arcadeDrive(-0.5 * properties.joystick.getJoystickY(),
+        0.5 * properties.joystick.getJoystickZ());
         arcadeDriveAuto(offsetPosition, offsetAngle, x, y, selfAlign, lines);
         return img;
     }
@@ -99,14 +103,14 @@ public class LineTrackingAlgo {
     public void arcadeDriveAuto(Point offset, double angle, int x, int y, boolean selfAlign,
             ArrayList<GripPipeline.Line> lines) {
         if (selfAlign) {
-            // System.out.println(weightedXY(lines).x + " " + offset.x);
             if (lines.size() > 0) {
-                robotDrive.arcadeDrive(
-                        SmartDashboard.getNumber("insanityFactor", 0) * properties.joystick.getJoystickX(),
-                        SmartDashboard.getNumber("autoTurnSpeed", 0.0035) * offset.x);
+               // System.out.println(0.5+" "+0.5);
+              //  robotDrive.arcadeDrive(0.5,0.5);
+                       // -SmartDashboard.getNumber("insanityFactor", 0) * properties.joystick.getJoystickY(),
+                       // SmartDashboard.getNumber("autoTurnSpeed", 0.5) * offset.x);
 
             } else {
-                robotDrive.arcadeDrive(properties.joystick.getJoystickX(), properties.joystick.getJoystickZ());
+              //  robotDrive.arcadeDrive(properties.joystick.getJoystickX(), properties.joystick.getJoystickZ());
             }
         }
     }
