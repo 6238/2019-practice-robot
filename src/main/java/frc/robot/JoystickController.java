@@ -34,7 +34,7 @@ public class JoystickController {
         return value;
     }
 
-    public double correctDeadSpotY(double value) {
+    public double correctDeadSpotStrict(double value) {
         if (Math.abs(value) < 0.3) {
             return 0;
         }
@@ -64,12 +64,13 @@ public class JoystickController {
     }
 
     public double getJoystickY() {
-        // return correctDeadSpotY(getAxis(1));
+        // return correctDeadSpotStrict(getAxis(1));
         return correctDeadSpot(getAxis(1));
     }
 
     public double getJoystickZ() {
-        return correctDeadSpot(getAxis(2));
+        // return correctDeadSpot(getAxis(2));
+        return correctDeadSpotStrict(getAxis(2));
     }
 
     // Numeral Buttons

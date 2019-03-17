@@ -34,7 +34,7 @@ public class Robot extends TimedRobot {
     controllers = new ArrayList<RobotController>();
     controllers.add(new DriveTrainController());
     // controllers.add(new ElevatorController());
-    controllers.add(new VisionController(properties));
+    // controllers.add(new VisionController(properties));
   }
 
   /**
@@ -46,7 +46,6 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
-    properties = new RobotProperties();
     properties.gyro.calibrate();
   }
 
@@ -109,6 +108,7 @@ public class Robot extends TimedRobot {
       }
     }
     properties.pushData(properties);
+    // System.out.println(properties.gyro.getAngle());
   }
 
   /**

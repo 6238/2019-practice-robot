@@ -3,6 +3,7 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -23,10 +24,12 @@ public class RobotProperties {
     private WPI_TalonSRX elevator1;
     private WPI_TalonSRX elevator2;
 
-    private WPI_TalonSRX motor7;
+    private WPI_TalonSRX mechanism;
     private WPI_TalonSRX motor8;
 
     public ADXRS450_Gyro gyro;
+
+    private PowerDistributionPanel pdp;
 
     public RobotProperties() {
         joystick = new JoystickController(0);
@@ -49,10 +52,13 @@ public class RobotProperties {
         elevator1 = new WPI_TalonSRX(1);
         elevator2 = new WPI_TalonSRX(2);
 
-        motor7 = new WPI_TalonSRX(5);
+        mechanism = new WPI_TalonSRX(5);
         motor8 = new WPI_TalonSRX(6);
 
         gyro = new ADXRS450_Gyro();
+
+        pdp = new PowerDistributionPanel();
+
     }
 
     public DifferentialDrive getRobotDrive() {
@@ -75,19 +81,19 @@ public class RobotProperties {
         this.elevator2 = elevator2;
     }
 
-    public WPI_TalonSRX getmotor7() {
-        return motor7;
+    public WPI_TalonSRX getMechanism() {
+        return mechanism;
     }
 
-    public void setmotor7(WPI_TalonSRX motor8) {
-        this.motor7 = motor7;
+    public void setMechanism(WPI_TalonSRX mechanism) {
+        this.mechanism = mechanism;
     }
 
-    public WPI_TalonSRX getmotor8() {
+    public WPI_TalonSRX getMotor8() {
         return motor8;
     }
 
-    public void setmotor8(WPI_TalonSRX motor8) {
+    public void setMotor8(WPI_TalonSRX motor8) {
         this.motor8 = motor8;
     }
 
@@ -124,5 +130,16 @@ public class RobotProperties {
         SmartDashboard.putData(properties.getRobotDrive());
 
         SmartDashboard.putData("Gyro", gyro);
+
+        SmartDashboard.putData("talon1", elevator1);
+        SmartDashboard.putData("talon2", elevator2);
+        SmartDashboard.putData("talon3", rightMotor1);
+        SmartDashboard.putData("talon4", rightMotor2);
+        SmartDashboard.putData("talon5", mechanism);
+        SmartDashboard.putData("talon6", motor8);
+        SmartDashboard.putData("talon7", leftMotor1);
+        SmartDashboard.putData("talon8", leftMotor2);
+        
+        SmartDashboard.putData("pdp", pdp);
     }
 }
